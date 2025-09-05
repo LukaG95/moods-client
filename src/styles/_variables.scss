@@ -1,0 +1,157 @@
+// COLORS
+$neutral-900: #21214D;
+$neutral-600: #57577B;
+$neutral-300: #9393B7;
+$neutral-200: #CBCDD0;
+$neutral-0: #FFFFFF;
+
+$blue-700: #2A4CD5;
+$blue-600: #4865DB;
+$blue-200: #C7D3F7;
+$blue-100: #E0E6FA;
+
+$red-700: #E60013;
+$red-300: #FF9B99;
+
+$indigo-200: #B8B1FF;
+$blue-300: #89CAFF;
+$green-300: #89E780;
+$amber-300: #FFC97C;
+$light-gradient: linear-gradient(180deg, #F5F5FF 72.99%, #E0E0FF 100%);
+
+// SPACING
+$spacing-0: 0;
+$spacing-025: 2px;
+$spacing-050: 4px;
+$spacing-075: 6px;
+$spacing-100: 8px;
+$spacing-125: 10px;
+$spacing-150: 12px;
+$spacing-200: 16px;
+$spacing-250: 20px;
+$spacing-300: 24px;
+$spacing-400: 32px;
+$spacing-500: 40px;
+$spacing-600: 48px;
+$spacing-800: 64px;
+$spacing-1000: 80px;
+
+// RADIUS
+$radius-0: 0;
+$radius-4: 4px;
+$radius-6: 6px;
+$radius-8: 8px;
+$radius-10: 10px;
+$radius-12: 12px;
+$radius-16: 16px;
+$radius-20: 20px;
+$radius-24: 24px;
+$radius-full: 999px;
+
+
+// TYPOGRAPHY
+@mixin text-preset-1 {
+  font-size: 52px;
+  line-height: 140%;
+  letter-spacing: -2px;
+  font-weight: 700;
+}
+
+@mixin text-preset-1-mobile {
+  font-size: 46px;
+  line-height: 120%;
+  letter-spacing: -2px;
+  font-weight: 700;
+}
+
+@mixin text-preset-2 {
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+}
+
+@mixin text-preset-2-mobile {
+  font-size: 32px;
+  line-height: 120%;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+}
+
+@mixin text-preset-3 {
+  font-size: 32px;
+  line-height: 140%;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+}
+
+@mixin text-preset-3-mobile {
+  font-size: 28px;
+  line-height: 130%;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+}
+
+@mixin text-preset-4 {
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  font-weight: 600;
+}
+
+@mixin text-preset-4-regular {
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  font-weight: 400;
+}
+
+@mixin text-preset-5 {
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  font-weight: 600;
+}
+
+@mixin text-preset-6-medium {
+  font-size: 18px;
+  line-height: 120%;
+  letter-spacing: 0px;
+  font-weight: 500;
+}
+
+@mixin text-preset-6-italic {
+  font-size: 18px;
+  line-height: 130%;
+  letter-spacing: 0px;
+  font-weight: 500;
+  font-style: italic;
+}
+
+@mixin text-preset-6-regular {
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.3px;
+  font-weight: 400;
+}
+
+@mixin text-preset-7 {
+  font-size: 15px;
+  line-height: 140%;
+  letter-spacing: -0.3px;
+  font-weight: 400;
+}
+
+@mixin text-preset-8 {
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  font-weight: 600;
+}
+
+@mixin text-preset-9 {
+  font-size: 12px;
+  line-height: 110%;
+  letter-spacing: 0px;
+  font-weight: 400;
+}
