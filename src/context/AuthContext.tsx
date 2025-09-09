@@ -1,45 +1,27 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
-
-type User = { id: string; name: string; email: string } | null;
+import { createContext, useContext } from "react";
+import { useFetch } from "@/hooks/useFetch";
+import type { User, UserResponse } from "@/types/api";
 
 type AuthContextType = {
-  user: User;
+  user: User | null;
   loading: boolean;
-  setUser: (u: User) => void;
-  refresh: () => Promise<void>;
-  logout: () => Promise<void>;
+  setUser: (u: UserResponse | null) => void;
+  refetch: () => Promise<void>;
+  error: unknown;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User>(null);
-  const [loading, setLoading] = useState(true);
-
-  const refresh = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get("/api/me", { withCredentials: true });
-      setUser(res.data ?? null);
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const logout = async () => {
-    await axios.post("/api/logout", {}, { withCredentials: true });
-    setUser(null);
-  };
-
-  useEffect(() => {
-    refresh();
-  }, []);
+  const { data, loading, setData: setUser, refetch, error } = useFetch<{ user: User | null }>({
+    method: "GET",
+    url: "/api/auth/me",
+  });
 
   return (
-    <AuthContext.Provider value={{ user, loading, setUser, refresh, logout }}>
+    <AuthContext.Provider
+      value={{ user: data?.user ?? null, loading, setUser, refetch, error }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,26 +1,31 @@
 import { useEffect, useState, useCallback } from "react";
-import type { AxiosRequestConfig, AxiosError } from "axios";
+import axios, { type AxiosRequestConfig, AxiosError } from "axios";
 import { api } from "@/lib/api";
+import type { ApiResponse } from "@/types/api";
 
-type RequiredConfig = AxiosRequestConfig & { 
-  url: string; 
-  method: string
+type RequiredConfig = AxiosRequestConfig & {
+  method: string;
+  url: string;
 };
 
-export function useFetch<T = unknown>({url, method}: RequiredConfig) {
-  const [data, setData] = useState<T | null>(null);
+export function useFetch<T extends object>({ method, url }: RequiredConfig) {
+  const [data, setData] = useState<ApiResponse<T> | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<AxiosError | null>(null);
 
   const refetch = useCallback(async () => {
     setLoading(true);
     setError(null);
+
     try {
-      const res = await api.request<T>({url, method});
-      setData((res.data as T) ?? null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      setError(err);
+      const res = await api.request<ApiResponse<T>>({ url, method });
+      setData(res.data ?? null);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err);
+      } else {
+        setError(new AxiosError("Unexpected error"));
+      }
       setData(null);
     } finally {
       setLoading(false);
@@ -28,7 +33,7 @@ export function useFetch<T = unknown>({url, method}: RequiredConfig) {
   }, [url, method]);
 
   useEffect(() => {
-    refetch();
+    void refetch();
   }, [refetch]);
 
   return { data, loading, error, refetch, setData };
