@@ -1,26 +1,37 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import type { User, UserResponse } from "@/types/api";
+import type { FetchConfig } from "@/types/api";
 
 type AuthContextType = {
   user: User | null;
   loading: boolean;
   setUser: (u: UserResponse | null) => void;
-  refetch: () => Promise<void>;
+  refetchAuth: (config?: FetchConfig) => Promise<boolean>;
   error: unknown;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { data, loading, setData: setUser, refetch, error } = useFetch<{ user: User | null }>({
-    method: "GET",
-    url: "/api/auth/me",
-  });
+  const config = useMemo(() => ({ method: "GET", url: "/api/auth/me" }), []);
+  const {
+    data,
+    loading,
+    setData: setUser,
+    refetch,
+    error,
+  } = useFetch<{ user: User | null }>(config);
 
   return (
     <AuthContext.Provider
-      value={{ user: data?.user ?? null, loading, setUser, refetch, error }}
+      value={{
+        user: data?.user ?? null,
+        loading,
+        setUser,
+        refetchAuth: refetch,
+        error,
+      }}
     >
       {children}
     </AuthContext.Provider>

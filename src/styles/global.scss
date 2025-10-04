@@ -6,13 +6,14 @@
 
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  font-family: "RedditSans", sans-serif;
 }
 
 html, body, #root{
   height: 100%;
+
 }
 
 body {
-  font-family: "RedditSans", sans-serif;
-  
+  background: $light-gradient;
 }

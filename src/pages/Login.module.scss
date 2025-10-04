@@ -1,0 +1,33 @@
+@use '@/styles/_variables' as *;
+
+.page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-600;
+}
+
+.inputsWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-250;
+}
+
+.bottomWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-250;
+  align-items: center;
+  @include text-preset-6-regular;
+  color: $neutral-600;
+
+  span{
+    color: $blue-600;
+    cursor: pointer;
+  }
+
+  a{
+    text-decoration: none;
+  }
+}

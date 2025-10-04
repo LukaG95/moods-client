@@ -1,0 +1,23 @@
+@use '@/styles/_variables' as *;
+
+.button{
+  width: 100%;
+  background: $blue-600;
+  border-radius: $radius-10;
+  @include text-preset-5;
+  color: $neutral-0;
+  border: none;
+  padding: $spacing-150 $spacing-400;
+  transition: background 0.2s ease;
+
+  &:disabled {
+    background: #9aa5d1 !important;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+  }
+
+  &:hover{
+    cursor: pointer;
+    background: $blue-700;
+  }
+}

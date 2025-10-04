@@ -1,0 +1,42 @@
+@use '@/styles/_variables' as *;
+
+.inputWrapper{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: $spacing-100;
+
+  label{
+    @include text-preset-6-regular;
+    color: $neutral-900;
+  }
+
+  input{
+    @include text-preset-6-regular;
+    color: $neutral-900;
+    padding: $spacing-150 $spacing-200;
+    border: 1px solid $neutral-300;
+    border-radius: $radius-10;
+    outline: none;
+
+    &:hover{
+      border: 1px solid $neutral-600;
+    }
+    &:focus{
+      border: 1px solid $neutral-600;
+    }
+  }
+
+  .inputError {
+    border: 1px solid $red-700;
+  }
+
+  .error{
+    position: absolute;
+    bottom: -17px;
+    display: flex;
+    gap: $spacing-075;
+    @include text-preset-9;
+    color: $red-700;
+  }
+}

@@ -1,0 +1,53 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #2a4cd5;
+
+  button {
+    background: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #e0e6fa;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+
+  button {
+    background: #4865db;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #2a4cd5;
+    }
+  }
+}
+
+.main {
+  flex: 1;
+  padding: 24px;
+}

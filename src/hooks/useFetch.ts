@@ -1,40 +1,77 @@
 import { useEffect, useState, useCallback } from "react";
-import axios, { type AxiosRequestConfig, AxiosError } from "axios";
+import axios from "axios";
 import { api } from "@/lib/api";
-import type { ApiResponse } from "@/types/api";
+import type { ApiResponse, FetchConfig } from "@/types/api";
+import { ApiError } from "@/types/api";
 
-type RequiredConfig = AxiosRequestConfig & {
-  method: string;
-  url: string;
+type FetchOptions = {
+  auto?: boolean; // instant fetch on mount
 };
 
-export function useFetch<T extends object>({ method, url }: RequiredConfig) {
+export function useFetch<T extends object>(
+  baseConfig?: FetchConfig, // mutation style - baseConfig is passed as props so we don't have to write a useEffect in the component that calls this useFetch
+  { auto = true }: FetchOptions = {}
+) {
   const [data, setData] = useState<ApiResponse<T> | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<AxiosError | null>(null);
+  const [loading, setLoading] = useState<boolean>(!!(auto && baseConfig));
+  const [error, setError] = useState<ApiError | null>(null);
 
-  const refetch = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const res = await api.request<ApiResponse<T>>({ url, method });
-      setData(res.data ?? null);
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err);
-      } else {
-        setError(new AxiosError("Unexpected error"));
+  const refetch = useCallback(
+    async (overrideConfig?: FetchConfig) => {
+      const finalConfig = overrideConfig || baseConfig;
+      if (!finalConfig) {
+        throw new Error("No request config provided to useFetch");
       }
-      setData(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [url, method]);
+
+      const { url, method, ...rest } = finalConfig;
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const res = await api.request<ApiResponse<T>>({
+          url,
+          method,
+          ...rest,
+        });
+        setData(res.data ?? null);
+        return true;
+      } catch (err: unknown) {
+        let error: ApiError;
+
+        if (axios.isAxiosError(err)) {
+          const error_id = err.response?.data.error_id;
+          const serverMessage = err.response?.data.message;
+
+          error = {
+            error_id,
+            message: serverMessage ?? "Something went wrong. Please try again.",
+            details: err.response?.data,
+          };
+        } else {
+          error = {
+            error_id: 0,
+            message: "Unexpected error occurred.",
+          };
+        }
+
+        console.error("ApiError:", error);
+        setError(error);
+        setData(null);
+        return false;
+      }
+      finally {
+        setLoading(false);
+      }
+    },
+    [baseConfig]
+  );
 
   useEffect(() => {
-    void refetch();
-  }, [refetch]);
+    if (auto && baseConfig) {
+      refetch();
+    }
+  }, [auto, baseConfig, refetch]);
 
   return { data, loading, error, refetch, setData };
 }
