@@ -6,15 +6,19 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { useAnimate } from "./context/TransitionContext";
 import { api } from "./lib/api";
 import styles from "./App.module.scss";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import DelayMounting from "./DelayMounting";
+import AnimatedLogo from "./AnimatedLogo";
 
 function App() {
   const { user, loading, refetchAuth } = useAuth();
+  const { setTransitioning } = useAnimate();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,17 +49,35 @@ function App() {
       <nav className={styles.nav}>
         <button onClick={() => navigate("/")}>Home</button>
         <button onClick={() => navigate("/dashboard")}>Dashboard</button>
-        <button onClick={() => navigate("/login")}>Login</button>
-        <button onClick={() => navigate("/signup")}>Signup</button>
+        <button
+          onClick={() => {
+            setTransitioning(true);
+            navigate("/login");
+          }}
+        >
+          Login
+        </button>
+
+        <button
+          onClick={() => {
+            setTransitioning(true);
+            navigate("/signup");
+          }}
+        >
+          Signup
+        </button>
         <button onClick={logout}>LOGOUT (API)</button>
       </nav>
 
       <main className={styles.main}>
+        {["/login", "/signup"].includes(location.pathname) && <AnimatedLogo />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route element={<DelayMounting />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Route>
           <Route path="/*" element={<Home />} />
         </Routes>
       </main>

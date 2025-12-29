@@ -59,8 +59,7 @@ export function useFetch<T extends object>(
         setError(error);
         setData(null);
         return false;
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     },

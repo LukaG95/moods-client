@@ -5,6 +5,7 @@
 }
 
 .nav {
+  position: absolute;
   display: flex;
   gap: 12px;
   padding: 12px;
@@ -49,5 +50,4 @@
 
 .main {
   flex: 1;
-  padding: 24px;
 }

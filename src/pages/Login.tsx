@@ -1,32 +1,28 @@
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import Form from "@/components/auth/Form";
-import Input from "@/components/auth/Input";
-import Button from "@/components/ui/Button";
+import Form from "@/ui/auth/Form";
+import Input from "@/ui/auth/Input";
+import Button from "@/ui/general/Button";
 import { useFetch } from "@/hooks/useFetch";
 import styles from "./Login.module.scss";
-import Logo from "@/assets/images/logo.svg";
 import { error_codes } from "@/lib/errors";
 import { Link } from "react-router-dom";
+import { useAnimate } from "@/context/TransitionContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { transitioning } = useAnimate();
+
   const { refetchAuth } = useAuth();
 
   const {
     loading,
     refetch: login,
     error,
-  } = useFetch<{ token: string }>(
-    {
-      url: "/api/auth/login",
-      method: "POST",
-    },
-    {
-      auto: false,
-    }
-  );
+  } = useFetch<{ token: string }>(undefined, {
+    auto: false,
+  });
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -40,11 +36,13 @@ const Login = () => {
 
   return (
     <div className={styles.page}>
-      <img src={Logo} alt="Logo" />
       <Form
         title="Welcome back!"
         description="Log in to continue tracking your mood and sleep"
         submit={handleSubmit}
+        className={`${styles.form} ${
+          transitioning ? styles.fadeOut : styles.fadeIn
+        }`}
       >
         <div className={styles.inputsWrapper}>
           <Input

@@ -1,4 +1,4 @@
-@use '@/styles/_variables' as *;
+@use "@/styles/_variables" as *;
 
 * {
   margin: 0;
@@ -9,11 +9,82 @@
   font-family: "RedditSans", sans-serif;
 }
 
-html, body, #root{
+html,
+body,
+#root {
   height: 100%;
-
 }
 
 body {
   background: $light-gradient;
+}
+
+@keyframes fadeTranslateInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeTranslateOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes fadeTranslateInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeTranslateOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+@keyframes elevateIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes elevateOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+    filter: blur(2px);
+  }
 }
