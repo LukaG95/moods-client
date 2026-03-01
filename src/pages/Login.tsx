@@ -6,13 +6,13 @@ import Button from "@/ui/general/Button";
 import { useFetch } from "@/hooks/useFetch";
 import styles from "./Login.module.scss";
 import { error_codes } from "@/lib/errors";
-import { Link } from "react-router-dom";
-import { useAnimate } from "@/context/TransitionContext";
+import { useTransitioning } from "@/context/TransitionContext";
+import TransitionLink from "@/components/TransitionLink";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { transitioning } = useAnimate();
+  const { transitioning, setTransitioning } = useTransitioning();
 
   const { refetchAuth } = useAuth();
 
@@ -40,6 +40,7 @@ const Login = () => {
         title="Welcome back!"
         description="Log in to continue tracking your mood and sleep"
         submit={handleSubmit}
+        onAnimationEnd={() => setTransitioning(false)}
         className={`${styles.form} ${
           transitioning ? styles.fadeOut : styles.fadeIn
         }`}
@@ -64,9 +65,9 @@ const Login = () => {
           </Button>
           <p>
             Haven't got an account?
-            <Link to="/signup">
+            <TransitionLink to="/signup">
               <span className={styles.signupLink}> Sign up.</span>
-            </Link>
+            </TransitionLink>
           </p>
         </div>
       </Form>

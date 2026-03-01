@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { useAnimate } from "./context/TransitionContext";
+import { useTransitioning } from "./context/TransitionContext";
 import { api } from "./lib/api";
 import styles from "./App.module.scss";
 import Home from "./pages/Home";
@@ -18,7 +18,7 @@ import AnimatedLogo from "./AnimatedLogo";
 
 function App() {
   const { user, loading, refetchAuth } = useAuth();
-  const { setTransitioning } = useAnimate();
+  const { setTransitioning } = useTransitioning();
   const location = useLocation();
   const navigate = useNavigate();
 

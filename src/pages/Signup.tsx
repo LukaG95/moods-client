@@ -3,23 +3,28 @@ import Form from "@/ui/auth/Form";
 import Input from "@/ui/auth/Input";
 import Button from "@/ui/general/Button";
 import styles from "./Signup.module.scss";
-
-import { Link } from "react-router-dom";
-import { useAnimate } from "@/context/TransitionContext";
+import TransitionLink from "@/components/TransitionLink";
+import { useTransitioning } from "@/context/TransitionContext";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { transitioning } = useAnimate();
+  const { transitioning, setTransitioning } = useTransitioning();
 
   return (
     <div className={styles.page}>
       <Form
         title="Create an account"
         description="Join to track your daily modds and sleep with ease."
+        onAnimationEnd={() => {
+          if (transitioning) {
+            setTransitioning(false);
+          }
+        }}
         className={`${styles.form} ${
           transitioning ? styles.fadeOut : styles.fadeIn
         }`}
+        submit={() => console.log("submitted")}
       >
         <div className={styles.inputsWrapper}>
           <Input
@@ -39,9 +44,9 @@ const Signup = () => {
           <Button type="submit">Sign up</Button>
           <p>
             Already got an account?
-            <Link to="/login">
+            <TransitionLink to="/login">
               <span className={styles.signupLink}> Login.</span>
-            </Link>
+            </TransitionLink>
           </p>
         </div>
       </Form>

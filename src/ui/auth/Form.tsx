@@ -9,11 +9,23 @@ type Props = {
   children: React.ReactNode;
   animate_card?: boolean;
   className?: string;
+  onAnimationEnd?: React.AnimationEventHandler<HTMLFormElement>;
 };
 
-const Form = ({ submit, title, description, children, className }: Props) => {
+const Form = ({
+  submit,
+  title,
+  description,
+  children,
+  className,
+  onAnimationEnd,
+}: Props) => {
   return (
-    <form className={`${styles.form} ${className}`} onSubmit={submit}>
+    <form
+      className={`${styles.form} ${className}`}
+      onSubmit={submit}
+      onAnimationEnd={onAnimationEnd}
+    >
       <header>
         <h1>{title}</h1>
         <p>{description}</p>

@@ -1,27 +1,35 @@
+@use "@/styles/_variables" as *;
+@use "@/styles/global";
+
 .wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
   margin: 80px 0px 48px 0px;
 }
 
 .logo {
   position: relative;
+
   display: flex;
+  gap: $spacing-200;
   align-items: center;
-  padding: 12px 0; // account for logo head height
+  justify-content: center;
+
+  width: fit-content;
 }
 
 .head {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
+  display: inline-block;
 }
 
+.tiltInitialPosition {
+  transform: translateX(190px) rotate(0deg);
+}
+
+/* second head */
 .head2 {
   position: absolute;
-  right: -110px;
+  right: -105px;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -30,102 +38,95 @@
   opacity: 0.4;
 }
 
-@keyframes bounce-roll-spin-right {
+@keyframes bounce-roll-spin-left {
   0% {
-    transform: translate(calc(-50% - 100px), -50%) translateY(0) rotate(0deg);
+    transform: translateX(190px) translateY(0) rotate(0deg);
     animation-timing-function: ease-out;
   }
 
   12.5% {
-    transform: translate(calc(-50% - 75px), -50%) translateY(-8px) rotate(45deg);
+    transform: translateX(166.25px) translateY(-12px) rotate(-45deg);
     animation-timing-function: ease-in;
   }
 
   25% {
-    transform: translate(calc(-50% - 50px), -50%) translateY(0) rotate(90deg);
+    transform: translateX(142.5px) translateY(0) rotate(-90deg);
     animation-timing-function: ease-out;
   }
 
   37.5% {
-    transform: translate(calc(-50% - 25px), -50%) translateY(-8px)
-      rotate(135deg);
+    transform: translateX(118.75px) translateY(-10px) rotate(-135deg);
     animation-timing-function: ease-in;
   }
 
   50% {
-    transform: translate(calc(-50%), -50%) translateY(0) rotate(180deg);
+    transform: translateX(95px) translateY(0) rotate(-180deg);
     animation-timing-function: ease-out;
   }
 
   62.5% {
-    transform: translate(calc(-50% + 25px), -50%) translateY(-8px)
-      rotate(225deg);
+    transform: translateX(71.25px) translateY(-8px) rotate(-225deg);
     animation-timing-function: ease-in;
   }
 
   75% {
-    transform: translate(calc(-50% + 50px), -50%) translateY(0) rotate(270deg);
+    transform: translateX(47.5px) translateY(0) rotate(-270deg);
     animation-timing-function: ease-out;
   }
 
   87.5% {
-    transform: translate(calc(-50% + 75px), -50%) translateY(-8px)
-      rotate(315deg);
+    transform: translateX(23.75px) translateY(-6px) rotate(-315deg);
     animation-timing-function: ease-in;
   }
 
   100% {
-    transform: translate(calc(-50% + 100px), -50%) translateY(0) rotate(360deg);
+    transform: translateX(0px) translateY(0) rotate(-360deg);
   }
 }
 
-@keyframes bounce-roll-spin-left {
+@keyframes bounce-roll-spin-right {
   0% {
-    transform: translate(calc(-50% + 100px), -50%) translateY(0) rotate(0deg);
+    transform: translateX(0px) translateY(0) rotate(0deg);
     animation-timing-function: ease-out;
   }
 
   12.5% {
-    transform: translate(calc(-50% + 75px), -50%) translateY(-8px)
-      rotate(-45deg);
+    transform: translateX(23.75px) translateY(-12px) rotate(45deg);
     animation-timing-function: ease-in;
   }
 
   25% {
-    transform: translate(calc(-50% + 50px), -50%) translateY(0) rotate(-90deg);
+    transform: translateX(47.5px) translateY(0) rotate(90deg);
     animation-timing-function: ease-out;
   }
 
   37.5% {
-    transform: translate(calc(-50% + 25px), -50%) translateY(-8px)
-      rotate(-135deg);
+    transform: translateX(71.25px) translateY(-10px) rotate(135deg);
     animation-timing-function: ease-in;
   }
 
   50% {
-    transform: translate(calc(-50%), -50%) translateY(0) rotate(-180deg);
+    transform: translateX(95px) translateY(0) rotate(180deg);
     animation-timing-function: ease-out;
   }
 
   62.5% {
-    transform: translate(calc(-50% - 25px), -50%) translateY(-8px)
-      rotate(-225deg);
+    transform: translateX(118.75px) translateY(-8px) rotate(225deg);
     animation-timing-function: ease-in;
   }
 
   75% {
-    transform: translate(calc(-50% - 50px), -50%) translateY(0) rotate(-270deg);
+    transform: translateX(142.5px) translateY(0) rotate(270deg);
     animation-timing-function: ease-out;
   }
 
   87.5% {
-    transform: translate(calc(-50% - 75px), -50%) translateY(-8px)
-      rotate(-315deg);
+    transform: translateX(166.25px) translateY(-6px) rotate(315deg);
     animation-timing-function: ease-in;
   }
 
   100% {
-    transform: translate(calc(-50% - 100px), -50%) translateY(0) rotate(-360deg);
+    transform: translateX(190px) translateY(0) rotate(360deg);
   }
 }
 

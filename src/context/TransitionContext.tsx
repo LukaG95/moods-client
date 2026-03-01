@@ -14,6 +14,7 @@ export function TransitionProvider({
   children: React.ReactNode;
 }) {
   const [transitioning, setTransitioning] = useState(false);
+
   return (
     <TransitionContext.Provider
       value={{
@@ -27,9 +28,11 @@ export function TransitionProvider({
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function useAnimate() {
+export function useTransitioning() {
   const ctx = useContext(TransitionContext);
   if (!ctx)
-    throw new Error("useAnimate must be used within <TransitionProvider>");
+    throw new Error(
+      "useTransitioning must be used within <TransitionProvider>",
+    );
   return ctx;
 }
