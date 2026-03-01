@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
-import { useOutlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useTransitioning } from "@/context/TransitionContext";
+import { useEffect, useState } from "react";
 
 export default function DelayMounting() {
-  const newOutlet = useOutlet();
+  const location = useLocation();
   const { transitioning } = useTransitioning();
 
-  const [displayed, setDisplayed] = useState(newOutlet);
+  const [displayLocation, setDisplayLocation] = useState(location);
 
   useEffect(() => {
-    if (!transitioning) setDisplayed(newOutlet);
-  }, [transitioning, newOutlet]);
+    if (!transitioning) {
+      setDisplayLocation(location);
+    }
+  }, [transitioning, location]);
 
-  return <>{displayed}</>;
+  return <Outlet key={displayLocation.key} />;
 }

@@ -24,7 +24,7 @@ function App() {
 
   if (loading) return <p>Loading...</p>;
 
-  // auth redirect logic
+  // (to improve) auth redirect logic
   const isAuthPage = ["/login", "/signup"].includes(location.pathname);
   if (!user && !isAuthPage) return <Navigate to="/login" replace />;
   if (user && isAuthPage) return <Navigate to="/" replace />;
