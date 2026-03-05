@@ -17,9 +17,7 @@ const Signup = () => {
         title="Create an account"
         description="Join to track your daily modds and sleep with ease."
         onAnimationEnd={() => {
-          if (transitioning) {
-            setTransitioning(false);
-          }
+          if (transitioning) setTransitioning(false);
         }}
         className={`${styles.form} ${
           transitioning ? styles.fadeOut : styles.fadeIn

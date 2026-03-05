@@ -40,11 +40,11 @@ export default function AnimatedLogo() {
               ? page === "login"
                 ? styles.left
                 : page === "signup"
-                ? styles.right
-                : ""
+                  ? styles.right
+                  : ""
               : page === "signup"
-              ? styles.tiltInitialPosition
-              : ""
+                ? styles.tiltInitialPosition
+                : ""
           }
         `}
         />

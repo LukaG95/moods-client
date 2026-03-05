@@ -40,7 +40,9 @@ const Login = () => {
         title="Welcome back!"
         description="Log in to continue tracking your mood and sleep"
         submit={handleSubmit}
-        onAnimationEnd={() => setTransitioning(false)}
+        onAnimationEnd={() => {
+          if (transitioning) setTransitioning(false);
+        }}
         className={`${styles.form} ${
           transitioning ? styles.fadeOut : styles.fadeIn
         }`}

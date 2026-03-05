@@ -1,10 +1,4 @@
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useTransitioning } from "./context/TransitionContext";
 import { api } from "./lib/api";
@@ -15,19 +9,13 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import DelayMounting from "./DelayMounting";
 import AnimatedLogo from "./AnimatedLogo";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const { user, loading, refetchAuth } = useAuth();
+  const { refetchAuth } = useAuth();
   const { setTransitioning } = useTransitioning();
   const location = useLocation();
   const navigate = useNavigate();
-
-  if (loading) return <p>Loading...</p>;
-
-  // (to improve) auth redirect logic
-  const isAuthPage = ["/login", "/signup"].includes(location.pathname);
-  if (!user && !isAuthPage) return <Navigate to="/login" replace />;
-  if (user && isAuthPage) return <Navigate to="/" replace />;
 
   function logout() {
     api
@@ -72,12 +60,16 @@ function App() {
       <main className={styles.main}>
         {["/login", "/signup"].includes(location.pathname) && <AnimatedLogo />}
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route element={<DelayMounting />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+
           <Route path="/*" element={<Home />} />
         </Routes>
       </main>

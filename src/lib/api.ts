@@ -10,6 +10,6 @@ export const api = axios.create({
 
 // Add interceptor for artificial delay
 api.interceptors.request.use(async (config) => {
-  await new Promise((resolve) => setTimeout(resolve, 0)); // 2s delay
+  await new Promise((resolve) => setTimeout(resolve, 2000)); // 2s delay
   return config;
 });
