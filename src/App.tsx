@@ -1,7 +1,6 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 import { useTransitioning } from "./context/TransitionContext";
-import { api } from "./lib/api";
 import styles from "./App.module.scss";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -10,21 +9,25 @@ import Dashboard from "./pages/Dashboard";
 import DelayMounting from "./DelayMounting";
 import AnimatedLogo from "./AnimatedLogo";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useFetch } from "./hooks/useFetch";
 
 function App() {
-  const { refetchAuth } = useAuth();
+  const { refetchAuth } = useAuthContext();
   const { setTransitioning } = useTransitioning();
   const location = useLocation();
   const navigate = useNavigate();
 
-  function logout() {
-    api
-      .request({
-        url: "/api/auth/logout",
-        method: "POST",
-      })
+  const { refetch: logout } = useFetch<{ token: string }>(undefined, {
+    auto: false,
+  });
+
+  async function handleLogout() {
+    logout({
+      url: "/api/auth/logout",
+      method: "POST",
+    })
       .then((res) => {
-        console.log(res.data);
+        console.log("loggedout", res);
       })
       .catch((err) => {
         console.error(err);
@@ -54,7 +57,7 @@ function App() {
         >
           Signup
         </button>
-        <button onClick={logout}>LOGOUT (API)</button>
+        <button onClick={handleLogout}>LOGOUT (API)</button>
       </nav>
 
       <main className={styles.main}>

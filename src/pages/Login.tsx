@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 import Form from "@/ui/auth/Form";
 import Input from "@/ui/auth/Input";
 import Button from "@/ui/general/Button";
@@ -14,7 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { transitioning, setTransitioning } = useTransitioning();
 
-  const { refetchAuth } = useAuth();
+  const { refetchAuth } = useAuthContext();
 
   const {
     loading,
@@ -24,14 +24,20 @@ const Login = () => {
     auto: false,
   });
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    const ok = await login({
+    login({
       url: "/api/auth/login",
       method: "POST",
       data: { email, password },
-    });
-    if (ok) refetchAuth();
+    })
+      .then((res) => {
+        console.log("loggedin", res);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => refetchAuth());
   }
 
   return (
@@ -39,7 +45,7 @@ const Login = () => {
       <Form
         title="Welcome back!"
         description="Log in to continue tracking your mood and sleep"
-        submit={handleSubmit}
+        submit={handleLogin}
         onAnimationEnd={() => {
           if (transitioning) setTransitioning(false);
         }}
