@@ -11,6 +11,7 @@ import AnimatedLogo from "./AnimatedLogo";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useFetch } from "./hooks/useFetch";
 import { showToast } from "./components/Toast";
+import { routesConfig } from "./lib/routesConfig";
 
 function App() {
   const { refetchAuth } = useAuthContext();
@@ -41,12 +42,14 @@ function App() {
   return (
     <div className={styles.app}>
       <nav className={styles.nav}>
-        <button onClick={() => navigate("/")}>Home</button>
-        <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+        <button onClick={() => navigate(routesConfig.home)}>Home</button>
+        <button onClick={() => navigate(routesConfig.dashboard)}>
+          Dashboard
+        </button>
         <button
           onClick={() => {
             setTransitioning(true);
-            navigate("/login");
+            navigate(routesConfig.login);
           }}
         >
           Login
@@ -55,7 +58,7 @@ function App() {
         <button
           onClick={() => {
             setTransitioning(true);
-            navigate("/signup");
+            navigate(routesConfig.signup);
           }}
         >
           Signup
@@ -64,19 +67,21 @@ function App() {
       </nav>
 
       <main className={styles.main}>
-        {["/login", "/signup"].includes(location.pathname) && <AnimatedLogo />}
+        {[routesConfig.login, routesConfig.signup].includes(
+          location.pathname,
+        ) && <AnimatedLogo />}
         <Routes>
           <Route element={<DelayMounting />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path={routesConfig.login} element={<Login />} />
+            <Route path={routesConfig.signup} element={<Signup />} />
           </Route>
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path={routesConfig.home} element={<Home />} />
+            <Route path={routesConfig.dashboard} element={<Dashboard />} />
           </Route>
 
-          <Route path="/*" element={<Home />} />
+          <Route path={routesConfig.any} element={<Home />} />
         </Routes>
       </main>
     </div>
