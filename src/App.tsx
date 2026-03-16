@@ -10,6 +10,7 @@ import DelayMounting from "./DelayMounting";
 import AnimatedLogo from "./AnimatedLogo";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useFetch } from "./hooks/useFetch";
+import { showToast } from "./components/Toast";
 
 function App() {
   const { refetchAuth } = useAuthContext();
@@ -27,9 +28,11 @@ function App() {
       method: "POST",
     })
       .then((res) => {
+        showToast("Logged out", 2, "success");
         console.log("loggedout", res);
       })
       .catch((err) => {
+        showToast("Error logging out", 2, "error");
         console.error(err);
       })
       .finally(() => refetchAuth());

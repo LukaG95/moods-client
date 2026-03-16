@@ -8,6 +8,7 @@ import styles from "./Login.module.scss";
 import { error_codes } from "@/lib/errors";
 import { useTransitioning } from "@/context/TransitionContext";
 import TransitionLink from "@/components/TransitionLink";
+import { showToast } from "@/components/Toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,9 +33,11 @@ const Login = () => {
       data: { email, password },
     })
       .then((res) => {
+        showToast("Logged in", 2, "success");
         console.log("loggedin", res);
       })
       .catch((err) => {
+        showToast("Error logging in", 2, "error");
         console.error(err);
       })
       .finally(() => refetchAuth());

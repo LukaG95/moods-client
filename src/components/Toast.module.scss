@@ -1,0 +1,72 @@
+@use "@/styles/_variables" as *;
+
+.toast {
+  position: fixed;
+  top: $spacing-200;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: $spacing-150;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: $spacing-150 $spacing-200;
+  border-radius: $radius-12;
+  border: 1px solid $neutral-200;
+  background: $neutral-0;
+  color: $neutral-900;
+  box-shadow: 0 8px 24px rgba(33, 33, 77, 0.14);
+  animation: toastIn 220ms ease-out both;
+}
+
+.success {
+  border-color: $blue-300;
+}
+
+.error {
+  border-color: $blue-300;
+}
+
+.info {
+  border-color: $blue-300;
+}
+
+.message {
+  @include text-preset-7;
+  margin-right: auto;
+}
+
+.close {
+  border: none;
+  background: transparent;
+  color: $neutral-600;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.closing {
+  animation: toastOut 220ms ease-in both;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+}
